@@ -1,4 +1,5 @@
 package com.example.todolist;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.todolist.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,6 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class Login extends AppCompatActivity {
 
@@ -31,6 +33,7 @@ public class Login extends AppCompatActivity {
     Button google;
     TextView botonRegistro;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     EditText emailText, passtext;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -46,6 +49,8 @@ public class Login extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         emailText = findViewById(R.id.cajaCorreo);
         passtext = findViewById(R.id.cajaPassword);
 
@@ -53,7 +58,7 @@ public class Login extends AppCompatActivity {
         botonRegistro = findViewById(R.id.botonRegistro);
         google = findViewById(R.id.google);
 
-        // Inicio con Google
+        // Configurar Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -61,28 +66,11 @@ public class Login extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInWithGoogle();
-            }
-        });
+        google.setOnClickListener(v -> signInWithGoogle());
 
-        // Inicio Sesión
-        botonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signInWithEmailAndPassword();
-            }
-        });
+        botonLogin.setOnClickListener(view -> signInWithEmailAndPassword());
 
-        // Registro
-        botonRegistro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerWithEmailAndPassword();
-            }
-        });
+        botonRegistro.setOnClickListener(view -> registerWithEmailAndPassword());
     }
 
     private void signInWithGoogle() {
@@ -100,16 +88,14 @@ public class Login extends AppCompatActivity {
         }
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                            navigateToMainActivity();
-                            actualizarUI();  // Llama a actualizarUI() después de iniciar sesión
-                        } else {
-                            Toast.makeText(Login.this, "Inicio de sesión no exitoso: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            comprobarUsuarioFirestore(user);
                         }
+                    } else {
+                        Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -124,28 +110,39 @@ public class Login extends AppCompatActivity {
         }
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Login.this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
-                            navigateToMainActivity();
-                            actualizarUI();  // Llama a actualizarUI() después de registrarse
-                        } else {
-                            Toast.makeText(Login.this, "Registro no exitoso: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            comprobarUsuarioFirestore(user);
                         }
+                    } else {
+                        Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void navigateToMainActivity() {
-        Intent intent = new Intent(Login.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private void actualizarUI() {
-
+    private void comprobarUsuarioFirestore(FirebaseUser user) {
+        db.collection("Usuarios").document(user.getUid()).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Usuario ya registrado
+                        startActivity(new Intent(Login.this, MainActivity.class));
+                        finish();
+                    } else {
+                        // Usuario nuevo
+                        Intent intent = new Intent(Login.this, CompletarPerfilActivity.class);
+                        intent.putExtra("uid", user.getUid());
+                        intent.putExtra("email", user.getEmail());
+                        intent.putExtra("nombre", user.getDisplayName());
+                        intent.putExtra("foto", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : "");
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(Login.this, "Error al comprobar usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     @Override
@@ -163,7 +160,6 @@ public class Login extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
         } catch (ApiException e) {
-            
             Log.e("GoogleSignInError", "Error al iniciar sesión con Google: " + e.getStatusCode());
             Toast.makeText(Login.this, "Error al iniciar sesión con Google", Toast.LENGTH_SHORT).show();
         }
@@ -172,19 +168,19 @@ public class Login extends AppCompatActivity {
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                         
-                            Toast.makeText(Login.this, "Inicio de sesión con Google exitoso", Toast.LENGTH_SHORT).show();
-                            navigateToMainActivity();
-                            actualizarUI(); 
-                        } else {
-                           
-                            Toast.makeText(Login.this, "Error al iniciar sesión con Google", Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            comprobarUsuarioFirestore(user);
                         }
+                    } else {
+                        Toast.makeText(Login.this, "Error al iniciar sesión con Google", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void actualizarUI() {
+        // Puedes usar esto si quieres refrescar algo visual
     }
 }

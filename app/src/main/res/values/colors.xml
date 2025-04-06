@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="marron1">#794300</color>
-    <color name="marron2">#845B1E</color>
-    <color name="marron3">#C1A678</color>
-    <color name="naranja">#BB3D16</color>
-    <color name="blue">#22E4F5</color>
-    <color name="greenn4">#8BC34A</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="light_blue_900">#FF01579B</color>
-    <color name="light_blue_A200">#FF40C4FF</color>
-    <color name="light_blue_A400">#FF00B0FF</color>
-    <color name="black_overlay">#66000000</color>
-    <color name="luz">#FFFFFFFF</color>
-    <color name="pressedColor" >#A35E5A5A</color>
-    <color name="defaultColor">#422B02</color>
+    <!-- Paleta seria + amigable -->
+    <color name="colorPrimary">#1B1B1F</color> <!-- Gris muy oscuro -->
+    <color name="colorPrimaryVariant">#333840</color>
+    <color name="colorSecondary">#FF6F00</color> <!-- Naranja sobrio -->
+    <color name="colorBackground">#F5F5F5</color> <!-- Fondo general -->
+    <color name="colorOnBackground">#1B1B1F</color> <!-- Texto general -->
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorError">#B00020</color>
 
-        <color name="colorPrimary">#3F51B5</color>
-        <color name="colorPrimaryDark">#303F9F</color>
-        <color name="colorAccent">#FF4081</color>
+    <color name="textPrimary">#1B1B1F</color>
+    <color name="colorTextSecondary">#757575</color>
+    <color name="textSecondary">#757575</color> <!-- Gris medio, buen contraste -->
+
+    <color name="buttonNormal">#333840</color> <!-- Gris oscuro para botones -->
+
+
+
+    <!-- Personalizados -->
+    <color name="marron1">#1B1B1F</color> <!-- sustituido -->
+    <color name="marron2">#FF6F00</color> <!-- sustituido -->
+    <color name="marron3">#333840</color> <!-- botones secundarios -->
+
+    <!-- Blanco y negro -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="light_blue_A400">#00B0FF</color>
+    <color name="light_blue_900">#01579B</color>
+    <color name="light_blue_600">#039BE5</color>
+    <color name="light_blue_A200">#40C4FF</color>
+
 
 
 </resources>
