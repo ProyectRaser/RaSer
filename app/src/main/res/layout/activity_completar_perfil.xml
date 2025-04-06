@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/ThemeOverlay.ToDoList.FullscreenContainer"
+    android:padding="24dp"
+    android:background="@color/colorBackground">
+
+    <!-- Imagen de perfil -->
+    <ImageView
+        android:id="@+id/imagenPerfil"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_placeholder"
+        android:contentDescription="Foto perfil"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Nombre del usuario -->
+    <EditText
+        android:id="@+id/editNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Tu nombre"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        android:textColor="@color/colorOnBackground"
+        android:textColorHint="@color/colorTextSecondary"
+        android:backgroundTint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/imagenPerfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
+
+    <!-- Alias del usuario -->
+    <EditText
+        android:id="@+id/editAlias"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Alias o descripción"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:textColor="@color/colorOnBackground"
+        android:textColorHint="@color/colorTextSecondary"
+        android:backgroundTint="@color/colorPrimaryVariant"
+        app:layout_constraintTop_toBottomOf="@id/editNombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Botón Guardar -->
+    <Button
+        android:id="@+id/botonGuardarPerfil"
+        style="@style/Widget.Button.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar perfil"
+        app:layout_constraintTop_toBottomOf="@id/editAlias"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

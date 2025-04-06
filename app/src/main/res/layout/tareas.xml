@@ -1,85 +1,99 @@
-<!-- res/layout/tareas.xml -->
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ThemeOverlay.ToDoList.FullscreenContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="12dp"
     android:background="#D5CBC0">
 
+    <!-- Nombre de la tarea -->
     <TextView
         android:id="@+id/textViewTarea"
-        android:layout_width="250dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/textview"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="58dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="borrarTarea"
-        android:backgroundTint="@color/marron3"
-        app:icon="@drawable/verificacion"
-        app:iconSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttoneditar"
-        android:layout_width="58dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="68dp"
-        android:onClick="editarTarea"
-        app:backgroundTint="@color/marron3"
-        app:icon="@drawable/editar"
-        app:iconSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextTarea"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Editar Libro"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Título de la tarea"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttoneditar"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- Botón Editar -->
+    <Button
+        android:id="@+id/buttoneditar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="editarTarea"
+        app:icon="@drawable/editar"
+        app:iconSize="24dp"
+        app:backgroundTint="@color/marron3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- Botón Borrar -->
+    <Button
+        android:id="@+id/button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="borrarTarea"
+        app:icon="@drawable/verificacion"
+        app:iconSize="24dp"
+        app:backgroundTint="@color/marron3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Estado -->
+    <TextView
+        android:id="@+id/textViewEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado: In Progress"
+        android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/textViewTarea"
-        android:visibility="gone" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
-
-    <Button
-        android:id="@+id/btnGuardar"
+    <!-- Prioridad -->
+    <TextView
+        android:id="@+id/textViewPrioridad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:onClick="guardarEdicion"
-        android:text="Guardar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTarea"
-        android:visibility="gone" />
+        android:text="Prioridad: Alta"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewEstado"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <Button
-        android:id="@+id/btnCancelar"
+    <!-- Lenguaje -->
+    <TextView
+        android:id="@+id/textViewLenguaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:onClick="cancelarEdicion"
-        android:text="Cancelar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTarea"
-        android:visibility="gone" />
+        android:text="Lenguaje: YAML"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewPrioridad"
+        app:layout_constraintStart_toStartOf="parent"/>
 
+    <!-- Tipo -->
+    <TextView
+        android:id="@+id/textViewTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo: Monitorización"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewLenguaje"
+        app:layout_constraintStart_toStartOf="parent"/>
 
+    <!-- Entorno -->
+    <TextView
+        android:id="@+id/textViewEntorno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entorno: Minikube"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTipo"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

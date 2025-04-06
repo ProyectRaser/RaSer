@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Mis Libros</string>
     <string name="hintCorreo">email</string>
     <string name="hintPass">Password</string>
     <string name="Login">Login</string>
@@ -12,6 +11,16 @@
     <string name="title_activity_splash">Splash</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="mis_libros">Mis Libros</string>
+    <string name="Tarea_DevOps">RaSer</string>
+
+    <string name="app_name">RaSer</string>
+        <string name="email_hint">Correo electrónico</string>
+        <string name="password_hint">Contraseña</string>
+        <string name="login">Iniciar sesión</string>
+        <string name="google_login">Iniciar con Google</string>
+        <string name="register">¿No tienes cuenta? Regístrate</string>
+
+
+
 
 </resources>

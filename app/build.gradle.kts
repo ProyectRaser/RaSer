@@ -48,7 +48,11 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:22.0.0")
     implementation ("com.google.firebase:firebase-firestore:24.0.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-
-
+    implementation("com.google.firebase:firebase-storage:20.0.0")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
 
 }
+
+
+
