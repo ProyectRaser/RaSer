@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.todolist">
     <uses-permission android:name="android.permission.INTERNET" />
-<<<<<<< HEAD
-=======
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
->>>>>>> main
 
     <application
         android:allowBackup="true"
