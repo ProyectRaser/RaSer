@@ -254,9 +254,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerEntornoFiltro.setSelection(0);
     }
 
-
-    public void editarTarea(View view) {
-
+        public void editarTarea(View view) {
         View parent = (View) view.getParent();
         TextView tareaTextView = parent.findViewById(R.id.textViewTarea);
         String nombre = tareaTextView.getText().toString();
@@ -267,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     // ✅ MÉTODO AÑADIDO PARA RESOLVER LINT
     public void borrarTarea(View view) {
@@ -290,5 +287,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }

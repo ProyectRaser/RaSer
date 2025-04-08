@@ -181,8 +181,6 @@ public class Login extends AppCompatActivity {
     }
 
     private void actualizarUI() {
-
-        // Puedes usar esto si quieres refrescar algo visual
-
+               // Puedes usar esto si quieres refrescar algo visual
     }
 }
