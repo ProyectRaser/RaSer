@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id("jacoco")
 }
 
 android {
@@ -67,12 +68,19 @@ tasks.register<JacocoReport>("jacocoTestReport") {
     }
 
     classDirectories.setFrom(
-        fileTree("${buildDir}/intermediates/javac/debug") {
-            include("**/*.class")
-        }
+        files(
+            fileTree("build/intermediates/javac/debug") {
+                include("**/*.class")
+                exclude("**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*")
+            }
+        )
     )
-    sourceDirectories.setFrom(files("src/main/java"))
-    executionData.setFrom(fileTree(buildDir) {
-        include("jacoco/testDebugUnitTest.exec")
-    })
+
+    sourceDirectories.setFrom(
+        files("src/main/java")
+    )
+
+    executionData.setFrom(
+        files("build/jacoco/testDebugUnitTest.exec")
+    )
 }
