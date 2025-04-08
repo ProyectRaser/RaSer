@@ -254,7 +254,11 @@ public class MainActivity extends AppCompatActivity {
         spinnerEntornoFiltro.setSelection(0);
     }
 
+<<<<<<< HEAD
     public void editarTarea(View view) {
+=======
+        public void editarTarea(View view) {
+>>>>>>> main
         View parent = (View) view.getParent();
         TextView tareaTextView = parent.findViewById(R.id.textViewTarea);
         String nombre = tareaTextView.getText().toString();
@@ -265,4 +269,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+<<<<<<< HEAD
+=======
+
+    // ✅ MÉTODO AÑADIDO PARA RESOLVER LINT
+    public void borrarTarea(View view) {
+        View parent = (View) view.getParent();
+        TextView tareaTextView = parent.findViewById(R.id.textViewTarea);
+        String nombre = tareaTextView.getText().toString();
+
+        for (Tarea tarea : listaTareas) {
+            if (tarea.nombre.equals(nombre)) {
+                db.collection("Tareas").document(tarea.id)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(this, "Tarea eliminada", Toast.LENGTH_SHORT).show();
+                        actualizarUI();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Error al eliminar", Toast.LENGTH_SHORT).show();
+                    });
+                break;
+            }
+        }
+    }
+>>>>>>> main
 }
