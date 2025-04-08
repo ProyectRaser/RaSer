@@ -60,8 +60,9 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/gradle@v1
-      continue-on-error: true
+      uses: snyk/actions@v0.4.0
+      with:
+        command: test --all-projects
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
