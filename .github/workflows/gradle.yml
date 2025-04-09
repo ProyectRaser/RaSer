@@ -62,12 +62,6 @@ jobs:
     #   run: snyk test --all-projects --org=proyectraser
     #   continue-on-error: true
 
-    - name: Upload JAR artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: jar-artifact
-        path: build/libs/*.jar
-
     - name: Upload APK as artifact
       uses: actions/upload-artifact@v4
       with:
