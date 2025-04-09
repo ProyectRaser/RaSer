@@ -1,5 +1,5 @@
 # Imagen base con Android SDK y Gradle
-FROM us-docker.pkg.dev/android-sdk/docker/android-build:latest
+FROM registry.gitlab.com/pabloromeo/docker-android-ci:latest
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
