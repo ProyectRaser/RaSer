@@ -59,7 +59,7 @@ jobs:
       run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
     - name: Run Snyk test for vulnerabilities
-      run: snyk test --all-projects ----org=proyectraser
+      run: snyk test --all-projects --org=proyectraser
       continue-on-error: true
 
     - name: Upload JAR artifact
