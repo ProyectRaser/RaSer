@@ -1,5 +1,5 @@
 # Imagen base con Android SDK y Gradle
-FROM bitnami/android:latest
+FROM us-docker.pkg.dev/android-sdk/docker/android-build:latest
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
