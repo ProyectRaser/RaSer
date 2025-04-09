@@ -1,14 +1,13 @@
-# Imagen base con Android SDK y Gradle
+# Imagen base con Android SDK y Gradle preinstalado
 FROM reactnativecommunity/react-native-android
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar todos los archivos del proyecto
+# Copiar el proyecto al contenedor
 COPY . .
 
-# Dar permisos de ejecución a gradlew
-RUN chmod +x ./gradlew
+# No se ejecuta gradlew porque el .apk se construye fuera
+# RUN ./gradlew assembleDebug
 
-# Ejecutar build para generar el APK
-RUN ./gradlew assembleDebug
+CMD ["bash"]

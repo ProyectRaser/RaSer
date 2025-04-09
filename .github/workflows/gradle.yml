@@ -25,14 +25,14 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
-    - name: Build project and jar
-      run: bash ./gradlew build
+    - name: Build project and APK
+      run: ./gradlew build assembleDebug
 
     - name: Run tests
-      run: bash ./gradlew test
+      run: ./gradlew test
 
     - name: Generate JaCoCo coverage report
-      run: bash ./gradlew jacocoTestReport
+      run: ./gradlew jacocoTestReport
 
     - name: Upload coverage report
       if: always()
@@ -41,26 +41,26 @@ jobs:
         name: coverage-report
         path: build/reports/jacoco/test/html
 
- #   - name: SonarCloud Scan
- #     uses: SonarSource/sonarcloud-github-action@v2
- #     with:
- #       projectBaseDir: .
- #       args: >
- #         -Dsonar.projectKey=proyectraser_raser
- #        -Dsonar.organization=proyectraser
- #         -Dsonar.host.url=https://sonarcloud.io
- #     env:
- #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    # - name: SonarCloud Scan
+    #   uses: SonarSource/sonarcloud-github-action@v2
+    #   with:
+    #     projectBaseDir: .
+    #     args: >
+    #       -Dsonar.projectKey=proyectraser_raser
+    #       -Dsonar.organization=proyectraser
+    #       -Dsonar.host.url=https://sonarcloud.io
+    #   env:
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     - name: Install Snyk CLI
-      run: npm install -g snyk
+       run: npm install -g snyk
 
     - name: Authenticate Snyk CLI
-      run: snyk auth ${{ secrets.SNYK_TOKEN }}
+       run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
- #   - name: Run Snyk test for vulnerabilities
- #     run: snyk test --all-projects --org=proyectraser
- #      continue-on-error: true
+    # - name: Run Snyk test for vulnerabilities
+    #   run: snyk test --all-projects --org=proyectraser
+    #   continue-on-error: true
 
     - name: Upload JAR artifact
       uses: actions/upload-artifact@v4
@@ -68,29 +68,24 @@ jobs:
         name: jar-artifact
         path: build/libs/*.jar
 
+    - name: Upload APK as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: debug-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_TOKEN }}
 
-    - name: Build Docker image with APK
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/android-apk-builder .
-
-    - name: Extract APK from Docker image
+    - name: Build and push Docker image
       run: |
-        docker create --name temp-container ${{ secrets.DOCKER_USERNAME }}/android-apk-builder
-        docker cp temp-container:/app/app/build/outputs/apk/debug/app-debug.apk app-debug.apk
-        docker rm temp-container
-
-    - name: Upload APK as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: debug-apk
-        path: app-debug.apk
-
-    - name: Push Docker image to Docker Hub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest .
+        docker tag ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
 
   dependency-submission:
     runs-on: ubuntu-latest
