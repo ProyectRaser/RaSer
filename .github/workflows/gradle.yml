@@ -28,8 +28,8 @@ jobs:
     - name: Build project and APK
       run: ./gradlew build assembleDebug
 
-    - name: Run tests
-      run: ./gradlew test
+    - name: Run unit tests (Android)
+      run: ./gradlew testDebugUnitTest
 
     - name: Generate JaCoCo coverage report
       run: ./gradlew jacocoTestReport
