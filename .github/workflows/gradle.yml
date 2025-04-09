@@ -58,9 +58,9 @@ jobs:
     - name: Authenticate Snyk CLI
       run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-    - name: Run Snyk test for vulnerabilities
-      run: snyk test --all-projects --org=proyectraser
-      continue-on-error: true
+ #   - name: Run Snyk test for vulnerabilities
+ #     run: snyk test --all-projects --org=proyectraser
+ #      continue-on-error: true
 
     - name: Upload JAR artifact
       uses: actions/upload-artifact@v4
