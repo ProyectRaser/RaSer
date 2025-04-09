@@ -29,7 +29,7 @@ jobs:
       run: ./gradlew build assembleDebug
 
     - name: Run unit tests (Android)
-      run: ./gradlew :app:testDebugUnitTest
+      run: ./gradlew :app:testDebugUnitTest --rerun-tasks
 
     - name: Generate JaCoCo coverage report
       run: ./gradlew :app:jacocoTestReport
