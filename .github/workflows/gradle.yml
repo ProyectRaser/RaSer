@@ -41,16 +41,16 @@ jobs:
         name: coverage-report
         path: build/reports/jacoco/test/html
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v2
-      with:
-        projectBaseDir: .
-        args: >
-          -Dsonar.projectKey=YOUR_PROJECT_KEY
-          -Dsonar.organization=YOUR_ORG
-          -Dsonar.host.url=https://sonarcloud.io
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+ #   - name: SonarCloud Scan
+ #     uses: SonarSource/sonarcloud-github-action@v2
+ #     with:
+ #       projectBaseDir: .
+ #       args: >
+ #         -Dsonar.projectKey=YOUR_PROJECT_KEY
+ #        -Dsonar.organization=YOUR_ORG
+ #         -Dsonar.host.url=https://sonarcloud.io
+ #     env:
+ #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     - name: Install Snyk CLI
       run: npm install -g snyk
