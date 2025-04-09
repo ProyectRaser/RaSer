@@ -39,8 +39,8 @@ jobs:
        echo "Buscando HTML de cobertura..."
        find app/build/reports/jacoco/ -type f -name "index.html" || echo "No se encontró index.html"
 
-    - name: Upload coverage report
-      if: always()
+    - name: Upload coverage report (si existe)
+      if: success() && hashFiles('app/build/reports/jacoco/test/html/index.html') != ''
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
