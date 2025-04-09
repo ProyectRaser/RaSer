@@ -1,5 +1,5 @@
 # Imagen base con Android SDK y Gradle
-FROM registry.gitlab.com/pabloromeo/docker-android-ci:latest
+FROM reactnativecommunity/react-native-android
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
