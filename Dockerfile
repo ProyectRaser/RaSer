@@ -1,5 +1,5 @@
 # Imagen base con Android SDK y Gradle
-FROM jlabanca/android-sdk:latest
+FROM ghcr.io/cirruslabs/android-sdk:30
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
