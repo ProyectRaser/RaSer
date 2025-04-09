@@ -32,7 +32,12 @@ jobs:
       run: ./gradlew :app:testDebugUnitTest --rerun-tasks
 
     - name: Generate JaCoCo coverage report
-      run: ./gradlew :app:jacocoTestReport
+      run: ./gradlew :app:jacocoTestReport --rerun-tasks
+
+    - name: Verificar si se generó el reporte
+      run: |
+       echo "Buscando HTML de cobertura..."
+       find app/build/reports/jacoco/ -type f -name "index.html" || echo "No se encontró index.html"
 
     - name: Upload coverage report
       if: always()
