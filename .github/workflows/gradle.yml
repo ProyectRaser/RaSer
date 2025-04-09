@@ -36,7 +36,6 @@ jobs:
   coverage:
     needs: build-and-test
     name:  Generate & Upload JaCoCo Coverage
-    needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -73,7 +72,6 @@ jobs:
   sonarcloud-analysis:
     needs: coverage
     name:  Análisis SonarCloud (opcional)
-    needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -103,7 +101,6 @@ jobs:
   security-analysis:
     needs: sonarcloud-analysis
     name: Análisis de vulnerabilidades con Snyk
-    needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -123,7 +120,6 @@ jobs:
   publish-artifacts:
     needs: security-analysis
     name: Subir APK a GitHub
-    needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -139,7 +135,6 @@ jobs:
   docker-release:
     needs: publish-artifacts
     name:  Publicar imagen Docker
-    needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -162,7 +157,6 @@ jobs:
   dependency-submission:
     needs: docker-release
     name: Submit Dependency Graph
-    needs: build-and-test
     runs-on: ubuntu-latest
     permissions:
       contents: write
