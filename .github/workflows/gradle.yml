@@ -46,8 +46,8 @@ jobs:
  #     with:
  #       projectBaseDir: .
  #       args: >
- #         -Dsonar.projectKey=YOUR_PROJECT_KEY
- #        -Dsonar.organization=YOUR_ORG
+ #         -Dsonar.projectKey=proyectraser_raser
+ #        -Dsonar.organization=proyectraser
  #         -Dsonar.host.url=https://sonarcloud.io
  #     env:
  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
       run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
     - name: Run Snyk test for vulnerabilities
-      run: snyk test --all-projects --org=default
+      run: snyk test --all-projects ----org=proyectraser
       continue-on-error: true
 
     - name: Upload JAR artifact
