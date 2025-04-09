@@ -1,5 +1,5 @@
 # Imagen base con Android SDK y Gradle
-FROM ghcr.io/cirruslabs/android-sdk:30
+FROM bitnami/android:latest
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
