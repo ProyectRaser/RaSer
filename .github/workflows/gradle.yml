@@ -9,7 +9,7 @@ on:
 jobs:
 
   build-and-test:
-    name: 🛠️ Build & Test Android App
+    name: Build & Test Android App
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,7 +34,8 @@ jobs:
       run: ./gradlew :app:testDebugUnitTest --rerun-tasks
 
   coverage:
-    name: 📊 Generate & Upload JaCoCo Coverage
+    needs: build-and-test
+    name:  Generate & Upload JaCoCo Coverage
     needs: build-and-test
     runs-on: ubuntu-latest
 
@@ -70,7 +71,8 @@ jobs:
         path: app/build/reports/jacoco/test/html
 
   sonarcloud-analysis:
-    name: 📁 Análisis SonarCloud (opcional)
+    needs: coverage
+    name:  Análisis SonarCloud (opcional)
     needs: build-and-test
     runs-on: ubuntu-latest
 
@@ -99,7 +101,8 @@ jobs:
     #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   security-analysis:
-    name: 🔒 Análisis de vulnerabilidades con Snyk
+    needs: sonarcloud-analysis
+    name: Análisis de vulnerabilidades con Snyk
     needs: build-and-test
     runs-on: ubuntu-latest
 
@@ -118,7 +121,8 @@ jobs:
     #   continue-on-error: true
 
   publish-artifacts:
-    name: 📦 Subir APK a GitHub
+    needs: security-analysis
+    name: Subir APK a GitHub
     needs: build-and-test
     runs-on: ubuntu-latest
 
@@ -133,7 +137,8 @@ jobs:
         path: app/build/outputs/apk/debug/app-debug.apk
 
   docker-release:
-    name: 🐳 Publicar imagen Docker
+    needs: publish-artifacts
+    name:  Publicar imagen Docker
     needs: build-and-test
     runs-on: ubuntu-latest
 
@@ -155,7 +160,8 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
 
   dependency-submission:
-    name: 📄 Submit Dependency Graph
+    needs: docker-release
+    name: Submit Dependency Graph
     needs: build-and-test
     runs-on: ubuntu-latest
     permissions:
