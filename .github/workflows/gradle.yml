@@ -52,14 +52,16 @@ jobs:
     - name: Grant execute permission to gradlew
       run: chmod +x ./gradlew
 
-    - name: Build with Gradle Wrapper
-      run: ./gradlew build
+    - name: Build project and APK
+      run: ./gradlew build assembleDebug
 
-  dependency-submission:
-    runs-on: ubuntu-latest
+    - name: Run unit tests (Android)
+      run: ./gradlew :app:testDebugUnitTest --rerun-tasks
+
+  coverage:
     needs: build
-    permissions:
-      contents: write
+    name:  Generate & Upload JaCoCo Coverage
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
@@ -71,9 +73,139 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-  
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: Run unit tests again (for coverage)
+      run: ./gradlew :app:testDebugUnitTest --rerun-tasks
+
+    - name: Generate JaCoCo coverage report
+      run: ./gradlew :app:jacocoTestReport --rerun-tasks
+
+    - name: Verificar si se generó el reporte
+      run: |
+        echo "Buscando HTML de cobertura..."
+        find app/build/reports/jacoco/ -type f -name "index.html" || echo "No se encontró index.html"
+
+    - name: Upload coverage report (si existe)
+      if: success() && hashFiles('app/build/reports/jacoco/test/html/index.html') != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: app/build/reports/jacoco/test/html
+
+  sonarcloud-analysis:
+    needs: coverage
+    name:  Análisis SonarCloud (opcional)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      with:
+        projectBaseDir: .
+        args: >
+          -Dsonar.projectKey=proyectraser_raser
+          -Dsonar.organization=proyectraser
+          -Dsonar.host.url=https://sonarcloud.io
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  security-analysis:
+    needs: sonarcloud-analysis
+    name: Análisis de vulnerabilidades con Snyk
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Snyk CLI
+      run: npm install -g snyk
+
+    - name: Authenticate Snyk CLI
+      run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+    - name: Run Snyk test for vulnerabilities
+      run: snyk test --all-projects --org=proyectraser
+      continue-on-error: true
+
+  publish-artifacts:
+    needs: security-analysis
+    name: Subir APK a GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: Recompilar APK (necesario en jobs separados)
+      run: ./gradlew :app:assembleDebug
+
+    - name: Upload APK as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: debug-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
+
+  docker-release:
+    needs: publish-artifacts
+    name:  Publicar imagen Docker
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest .
+        docker tag ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
+
+  dependency-submission:
+    needs: docker-release
+    name: Submit Dependency Graph
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
     - name: Submit dependency graph
       uses: gradle/actions/dependency-submission@v4
-
-

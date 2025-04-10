@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id("jacoco")
 }
 
 android {
@@ -54,5 +55,32 @@ dependencies {
 
 }
 
+jacoco {
+    toolVersion = "0.8.10"
+}
 
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
 
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    classDirectories.setFrom(
+        files(
+            fileTree("build/intermediates/javac/debug") {
+                include("**/*.class")
+                exclude("**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*")
+            }
+        )
+    )
+
+    sourceDirectories.setFrom(
+        files("src/main/java")
+    )
+
+    executionData.setFrom(
+        files("build/jacoco/testDebugUnitTest.exec")
+    )
+}
