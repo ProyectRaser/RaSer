@@ -3,7 +3,7 @@ plugins {
     id("com.google.gms.google-services")
     id("jacoco")
 }
-
+// Compil y ejecuta la app
 android {
     namespace = "com.example.todolist"
     compileSdk = 34
@@ -27,38 +27,21 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     buildFeatures {
         viewBinding = true
     }
 }
-
-dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation ("com.google.firebase:firebase-auth")
-    implementation ("com.google.firebase:firebase-database")
-    implementation ("com.google.firebase:firebase-auth:22.0.0")
-    implementation ("com.google.firebase:firebase-firestore:24.0.0")
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation("com.google.firebase:firebase-storage:20.0.0")
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
-
-}
-
+// Genera informes de cobertura
 jacoco {
     toolVersion = "0.8.10"
 }
-
+// Genera informes de test
 tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("testDebugUnitTest")
 
@@ -67,20 +50,52 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         html.required.set(true)
     }
 
-    classDirectories.setFrom(
-        files(
-            fileTree("build/intermediates/javac/debug") {
-                include("**/*.class")
-                exclude("**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*")
-            }
+    val fileFilter = listOf(
+        "**/R.class", "**/R$*.class", "**/BuildConfig.*",
+        "**/Manifest*.*", "**/*Test*.*"
+    )
+
+    val javaClasses = fileTree("${buildDir}/intermediates/javac/debug/classes") {
+        exclude(fileFilter)
+    }
+
+    val kotlinClasses = fileTree("${buildDir}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+
+    classDirectories.setFrom(files(javaClasses, kotlinClasses))
+    sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
+
+    executionData.setFrom(fileTree(buildDir) {
+        include(
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
         )
-    )
+    })
+}
 
-    sourceDirectories.setFrom(
-        files("src/main/java")
-    )
+dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 
-    executionData.setFrom(
-        files("build/jacoco/testDebugUnitTest.exec")
-    )
+    // Android
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.android.material:material:1.11.0")
+
+    // Firebase
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth:22.0.0")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-firestore:24.0.0")
+    implementation("com.google.firebase:firebase-storage:20.0.0")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+    // Testing
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
