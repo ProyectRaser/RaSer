@@ -123,7 +123,7 @@ jobs:
             -Dsonar.projectKey=ProyectRaser_RaSer
             -Dsonar.organization=proyectraser
             -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.java.binaries=app/build/intermediates/javac/debug/classes
+            -Dsonar.java.binaries=app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes
                   
 
   security-analysis:
