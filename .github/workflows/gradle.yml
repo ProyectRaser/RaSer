@@ -29,6 +29,17 @@ jobs:
           name: test-failures
           path: app/build/test-results/
 
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Android Lint
+        run: ./gradlew lint
+                
+
   build:
     needs: [setup, test]
     runs-on: ubuntu-latest
