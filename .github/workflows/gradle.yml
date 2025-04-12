@@ -38,7 +38,17 @@ jobs:
 
       - name: Run Android Lint
         run: ./gradlew lint
-                
+
+      
+      - name: Upload lint report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-report
+          path: app/build/reports/lint-results-debug.html
+        
+
+
 
   build:
     needs: [setup, test]
