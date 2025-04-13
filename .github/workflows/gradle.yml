@@ -146,6 +146,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Build APK
+        run: ./gradlew :app:assembleDebug
+      - name: Show APK path
+        run: ls -R app/build/outputs/apk/debug
+        
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
