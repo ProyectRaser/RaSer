@@ -132,6 +132,10 @@ jobs:
       - name: Run Snyk test for vulnerabilities
         run: snyk test --all-projects --org=proyectraser
         continue-on-error: true
+        
+      - name: Run Snyk monitor for vulnerabilities
+        run: snyk monitor --all-projects --org=proyectraser  
+       
 
   publish-artifacts:
     needs: [setup, security-analysis]
