@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "482922853874",
-    "project_id": "mistareas-f00ec",
-    "storage_bucket": "mistareas-f00ec.appspot.com"
+    "project_number": "205663513418",
+    "project_id": "raser-a5816",
+    "storage_bucket": "raser-a5816.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:482922853874:android:bed6f5d98866e50e11276b",
+        "mobilesdk_app_id": "1:205663513418:android:46735ee0cf7878977d2fb3",
         "android_client_info": {
           "package_name": "com.example.todolist"
         }
       },
       "oauth_client": [
         {
-          "client_id": "482922853874-0f4e99hengues55ddffp7t4pjjs8pk27.apps.googleusercontent.com",
+          "client_id": "205663513418-80ajo6dasmvm993i1ldjut4one60kulg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.todolist",
-            "certificate_hash": "0dac983f6fd475758cba875b1e2f0fa76810f10b"
+            "certificate_hash": "616535b54b06ee70c9c4b08609d72f36a4a16d7b"
           }
         },
         {
-          "client_id": "482922853874-dd0cda6uvr2kfrb8em7nlqc9tfbd8thd.apps.googleusercontent.com",
+          "client_id": "205663513418-1vfv8n8b0fhal7bk78tc8hm919cr9d13.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDBN-nbgPHAVJFx4aHa3qG9MAC6X8-VLpw"
+          "current_key": "AIzaSyCB6xRB13pWNrplrmPKNoLT7DCCRLaQK7U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "482922853874-dd0cda6uvr2kfrb8em7nlqc9tfbd8thd.apps.googleusercontent.com",
+              "client_id": "205663513418-1vfv8n8b0fhal7bk78tc8hm919cr9d13.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

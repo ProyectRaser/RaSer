@@ -27,6 +27,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Login extends AppCompatActivity {
 
     Button botonLogin;
@@ -114,11 +117,29 @@ public class Login extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         if (user != null) {
-                            comprobarUsuarioFirestore(user);
+                            // Creamos el documento en Firestore para el nuevo usuario
+                            Map<String, Object> datosUsuario = new HashMap<>();
+                            datosUsuario.put("email", user.getEmail());
+                            datosUsuario.put("nombre", user.getDisplayName() != null ? user.getDisplayName() : "");
+                            datosUsuario.put("foto", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : "");
+
+                            db.collection("Usuarios").document(user.getUid()).set(datosUsuario)
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Una vez creado, ir a completar perfil
+                                        Intent intent = new Intent(Login.this, CompletarPerfilActivity.class);
+                                        intent.putExtra("uid", user.getUid());
+                                        intent.putExtra("email", user.getEmail());
+                                        intent.putExtra("nombre", user.getDisplayName());
+                                        intent.putExtra("foto", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : "");
+                                        startActivity(intent);
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(Login.this, "Error al crear perfil: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
                         }
-                    } else {
-                        Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
+
                 });
     }
 
@@ -172,13 +193,45 @@ public class Login extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         if (user != null) {
-                            comprobarUsuarioFirestore(user);
+                            // Comprobar si el usuario ya existe
+                            db.collection("Usuarios").document(user.getUid()).get()
+                                    .addOnSuccessListener(documentSnapshot -> {
+                                        if (documentSnapshot.exists()) {
+                                            // Usuario ya registrado
+                                            startActivity(new Intent(Login.this, MainActivity.class));
+                                            finish();
+                                        } else {
+                                            // Crear documento para usuario nuevo
+                                            Map<String, Object> datosUsuario = new HashMap<>();
+                                            datosUsuario.put("email", user.getEmail());
+                                            datosUsuario.put("nombre", user.getDisplayName() != null ? user.getDisplayName() : "");
+                                            datosUsuario.put("foto", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : "");
+
+                                            db.collection("Usuarios").document(user.getUid()).set(datosUsuario)
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        Intent intent = new Intent(Login.this, CompletarPerfilActivity.class);
+                                                        intent.putExtra("uid", user.getUid());
+                                                        intent.putExtra("email", user.getEmail());
+                                                        intent.putExtra("nombre", user.getDisplayName());
+                                                        intent.putExtra("foto", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : "");
+                                                        startActivity(intent);
+                                                        finish();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Toast.makeText(Login.this, "Error al crear perfil: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(Login.this, "Error al comprobar usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
                         }
                     } else {
                         Toast.makeText(Login.this, "Error al iniciar sesión con Google", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
     private void actualizarUI() {
                // Puedes usar esto si quieres refrescar algo visual

@@ -6,12 +6,12 @@ plugins {
 // Compil y ejecuta la app
 android {
     namespace = "com.example.todolist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.todolist"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -75,7 +75,7 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
 
     // Android
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -92,6 +92,9 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation("androidx.credentials:credentials:1.5.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
     // Testing
