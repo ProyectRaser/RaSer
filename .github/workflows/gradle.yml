@@ -126,9 +126,6 @@ jobs:
       - name: Install backen dependencies
         run:  pip install -r backend/requirements.txt
 
-      - name: Install frontend dependencies
-        run: npm install
-
       - name: Build project (necesario para Snyk)
         run: ./gradlew :app:assembleDebug
   
