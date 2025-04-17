@@ -15,11 +15,10 @@
         android:text="Título de la tarea"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:layout_marginEnd="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttoneditar"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginEnd="8dp"/>
+        app:layout_constraintEnd_toStartOf="@id/buttoneditar" />
 
     <!-- Botón Editar -->
     <Button
@@ -29,10 +28,10 @@
         android:onClick="editarTarea"
         app:icon="@drawable/editar"
         app:iconSize="24dp"
-        app:backgroundTint="@color/marron3"
+        app:backgroundTint="@color/muted_teal"
+        android:layout_marginEnd="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button"
-        android:layout_marginEnd="8dp"/>
+        app:layout_constraintEnd_toStartOf="@id/button" />
 
     <!-- Botón Borrar -->
     <Button
@@ -42,7 +41,8 @@
         android:onClick="borrarTarea"
         app:icon="@drawable/verificacion"
         app:iconSize="24dp"
-        app:backgroundTint="@color/marron3"
+        app:backgroundTint="@color/muted_teal"
+        android:layout_marginEnd="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

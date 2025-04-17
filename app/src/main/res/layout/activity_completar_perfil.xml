@@ -16,9 +16,25 @@
         android:layout_marginTop="32dp"
         android:src="@drawable/ic_placeholder"
         android:contentDescription="Foto perfil"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+    <Button
+        android:id="@+id/btnSeleccionarFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar foto"
+        app:layout_constraintTop_toBottomOf="@id/imagenPerfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/beige_soft"
+        />
+
+
 
     <!-- Nombre del usuario -->
     <EditText
@@ -31,10 +47,10 @@
         android:textColor="@color/colorOnBackground"
         android:textColorHint="@color/colorTextSecondary"
         android:backgroundTint="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/imagenPerfil"
+        app:layout_constraintTop_toBottomOf="@id/btnSeleccionarFoto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="16dp"/>
 
     <!-- Alias del usuario -->
     <EditText
@@ -62,6 +78,7 @@
         app:layout_constraintTop_toBottomOf="@id/editAlias"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/beige_soft"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

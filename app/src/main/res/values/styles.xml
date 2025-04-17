@@ -4,7 +4,7 @@
     <!-- Tema base de la app -->
     <style name="Theme.ToDoList" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Colores principales -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/taupe_grey</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorSecondary">@color/colorSecondary</item>
 

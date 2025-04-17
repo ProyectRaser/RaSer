@@ -1,7 +1,6 @@
 package com.example.todolist;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,13 +22,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String idUser;
 
+
+
+
     ListView listViewTareas;
     List<Tarea> listaTareas = new ArrayList<>();
     TareaAdapter adapterTareas;
@@ -54,13 +52,20 @@ public class MainActivity extends AppCompatActivity {
     String tipoSeleccionado = "Todos";
     String entornoSeleccionado = "Todos";
 
+
+
+
+
     @SuppressLint("MissingInflatedId")
     @Override
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -117,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -124,19 +132,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.add) {
+        int id = item.getItemId();
+
+        if (id == R.id.add) {
             mostrarDialogoNuevaTarea();
             return true;
-        } else if (item.getItemId() == R.id.out) {
+        } else if (id == R.id.out) {
             mAuth.signOut();
             startActivity(new Intent(MainActivity.this, Login.class));
             finish();
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+        } else if (id == R.id.perfil) {
+            Intent intent = new Intent(MainActivity.this, CompletarPerfilActivity.class);
+            intent.putExtra("uid", idUser);
+            intent.putExtra("email", mAuth.getCurrentUser().getEmail());
+            startActivity(intent);
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
 
     private void mostrarDialogoNuevaTarea() {
         final EditText tarea = new EditText(this);
@@ -163,8 +185,14 @@ public class MainActivity extends AppCompatActivity {
 
                     db.collection("Tareas")
                             .add(data)
-                            .addOnSuccessListener(documentReference -> actualizarUI())
-                            .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Error al crear la tarea: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                            .addOnSuccessListener(documentReference -> {
+                                Log.d("FIRESTORE", "Tarea creada con ID: " + documentReference.getId());
+                                actualizarUI();
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("FIRESTORE", "Error al crear tarea", e);
+                                Toast.makeText(MainActivity.this, "Error al crear la tarea: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
                 })
                 .setNegativeButton("Cancelar", null)
                 .create();
@@ -200,8 +228,14 @@ public class MainActivity extends AppCompatActivity {
                     data.put("entorno", spinnerEntorno.getSelectedItem().toString());
 
                     db.collection("Tareas").document(tarea.id).update(data)
-                            .addOnSuccessListener(aVoid -> actualizarUI())
-                            .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Error al actualizar", Toast.LENGTH_SHORT).show());
+                            .addOnSuccessListener(aVoid -> {
+                                Log.d("FIRESTORE", "Tarea actualizada");
+                                actualizarUI();
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("FIRESTORE", "Error al actualizar tarea", e);
+                                Toast.makeText(MainActivity.this, "Error al actualizar", Toast.LENGTH_SHORT).show();
+                            });
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
@@ -243,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     adapterTareas.notifyDataSetChanged();
                 })
-                .addOnFailureListener(e -> Log.e("MainActivity", "Error al obtener tareas", e));
+                .addOnFailureListener(e -> Log.e("FIRESTORE", "Error al obtener tareas", e));
     }
 
     public void limpiarFiltros(View view) {
@@ -254,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerEntornoFiltro.setSelection(0);
     }
 
-        public void editarTarea(View view) {
+    public void editarTarea(View view) {
         View parent = (View) view.getParent();
         TextView tareaTextView = parent.findViewById(R.id.textViewTarea);
         String nombre = tareaTextView.getText().toString();
@@ -266,7 +300,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // ✅ MÉTODO AÑADIDO PARA RESOLVER LINT
     public void borrarTarea(View view) {
         View parent = (View) view.getParent();
         TextView tareaTextView = parent.findViewById(R.id.textViewTarea);
@@ -275,16 +308,27 @@ public class MainActivity extends AppCompatActivity {
         for (Tarea tarea : listaTareas) {
             if (tarea.nombre.equals(nombre)) {
                 db.collection("Tareas").document(tarea.id)
-                    .delete()
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(this, "Tarea eliminada", Toast.LENGTH_SHORT).show();
-                        actualizarUI();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Error al eliminar", Toast.LENGTH_SHORT).show();
-                    });
+                        .delete()
+                        .addOnSuccessListener(aVoid -> {
+                            Log.d("FIRESTORE", "Tarea eliminada");
+                            Toast.makeText(this, "Tarea eliminada", Toast.LENGTH_SHORT).show();
+                            actualizarUI();
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e("FIRESTORE", "Error al eliminar tarea", e);
+                            Toast.makeText(this, "Error al eliminar", Toast.LENGTH_SHORT).show();
+                        });
                 break;
             }
         }
     }
+
+    public void entrarperfil(View view) {
+        Intent intent = new Intent(MainActivity.this, CompletarPerfilActivity.class);
+        intent.putExtra("uid", idUser); // importante si lo usas dentro
+        intent.putExtra("email", mAuth.getCurrentUser().getEmail());
+        intent.putExtra("nombre", ""); // puedes precargar el nombre si lo tienes
+        startActivity(intent);
+    }
+
 }

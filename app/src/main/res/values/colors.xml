@@ -12,6 +12,17 @@
     <color name="textPrimary">#1B1B1F</color>
     <color name="colorTextSecondary">#757575</color>
     <color name="textSecondary">#757575</color> <!-- Gris medio, buen contraste -->
+    <color name="colorraserbackground"> #042132</color>
+
+    <color name="beige_soft">#bcb094</color>
+    <color name="navy_dark">#042132</color>
+    <color name="taupe_grey">#6d6a5d</color>
+    <color name="charcoal_brown">#4f4c43</color>
+    <color name="muted_teal">#7c9494</color>
+    <color name="golden_bronze">#84643c</color>
+    <color name="steel_blue">#39434e</color>
+    <color name="cool_grey">#7c8c94</color>
+
 
     <color name="buttonNormal">#333840</color> <!-- Gris oscuro para botones -->
 
