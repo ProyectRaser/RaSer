@@ -123,6 +123,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install backen dependencies
+        run:  pip install -r backend/requirements.txt
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Build project (necesario para Snyk)
+        run: ./gradlew :app:assembleDebug
+  
+
       - name: Install Snyk CLI
         run: npm install -g snyk
 

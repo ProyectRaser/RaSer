@@ -36,7 +36,7 @@ def get_users():
     try:
         usuarios_ref = db.collection("Usuarios").stream()
         usuarios = [doc.to_dict() for doc in usuarios_ref]
-        print("Usuarios obtenidos:", usuarios)  # 👈 para debug
+        print("Usuarios obtenidos:", usuarios) 
         return usuarios
     except Exception as e:
         print("Error:", e)
