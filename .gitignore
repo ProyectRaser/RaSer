@@ -15,3 +15,4 @@
 local.properties
 firebase_key.json
 backend/venv/
+k8s/github-secret.yaml
