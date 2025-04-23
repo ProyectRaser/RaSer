@@ -14,3 +14,4 @@
 .cxx
 local.properties
 firebase_key.json
+k8s/github-secret.yaml
