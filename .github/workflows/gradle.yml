@@ -172,11 +172,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Prepare minimal Docker context with only APK
-        run: |
-          mkdir apk-context
-          cp app/build/outputs/apk/debug/app-debug.apk apk-context/
-          cp Dockerfile.apk apk-context/Dockerfile
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: debug-apk
+          path: apk-context
+
+      - name: Copy Dockerfile.apk into context
+        run: cp Dockerfile.apk apk-context/Dockerfile
 
       - name: Build and push Docker image
         run: |
