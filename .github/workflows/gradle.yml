@@ -2,9 +2,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "ramon" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "ramon" ]
 
 jobs:
   setup:
@@ -39,16 +39,12 @@ jobs:
       - name: Run Android Lint
         run: ./gradlew lint
 
-      
       - name: Upload lint report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lint-report
           path: app/build/reports/lint-results-debug.html
-        
-
-
 
   build:
     needs: [setup, test]
@@ -123,12 +119,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install backen dependencies
-        run:  pip install -r backend/requirements.txt
+      - name: Install backend dependencies
+        run: pip install -r backend/requirements.txt
 
       - name: Build project (necesario para Snyk)
         run: ./gradlew :app:assembleDebug
-  
 
       - name: Install Snyk CLI
         run: npm install -g snyk
@@ -138,12 +133,10 @@ jobs:
 
       - name: Run Snyk test for vulnerabilities
         run: snyk test --all-projects --org=raser
-
         continue-on-error: true
-        
+
       - name: Run Snyk monitor for vulnerabilities
-        run: snyk monitor --all-projects --org=raser   
-       
+        run: snyk monitor --all-projects --org=raser
 
   publish-artifacts:
     needs: [setup, security-analysis]
@@ -155,9 +148,10 @@ jobs:
 
       - name: Build APK
         run: ./gradlew :app:assembleDebug
+
       - name: Show APK path
         run: ls -R app/build/outputs/apk/debug
-        
+
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -166,7 +160,7 @@ jobs:
 
   docker-release:
     needs: publish-artifacts
-    name: Publicar imagen Docker
+    name: Publicar imagen Docker optimizada
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -178,10 +172,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Prepare minimal Docker context with only APK
+        run: |
+          mkdir apk-context
+          cp app/build/outputs/apk/debug/app-debug.apk apk-context/
+          cp Dockerfile.apk apk-context/Dockerfile
+
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
+          docker build \
+            --file apk-context/Dockerfile \
+            --tag ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest \
+            --tag ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }} \
+            apk-context
+
           docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
 

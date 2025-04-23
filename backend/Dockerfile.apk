@@ -1,0 +1,5 @@
+# Dockerfile.apk
+FROM alpine:latest
+WORKDIR /apk
+COPY app-debug.apk .
+CMD ["ls", "-lh", "app-debug.apk"]
