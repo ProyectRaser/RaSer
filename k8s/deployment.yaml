@@ -22,6 +22,18 @@ spec:
           volumeMounts:
             - mountPath: /app/data
               name: data-volume
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 20
       volumes:
         - name: data-volume
           persistentVolumeClaim:
