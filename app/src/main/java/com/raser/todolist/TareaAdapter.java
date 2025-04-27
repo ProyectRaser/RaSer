@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.raser.todolist;
 
 import android.app.Activity;
 import android.graphics.Color;

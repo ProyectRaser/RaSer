@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.raser.todolist;
 
 import org.junit.Before;
 import org.junit.Test;

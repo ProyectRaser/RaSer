@@ -9,7 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.todolist"
+        applicationId = "com.raser.todolist"
         minSdk = 28
         targetSdk = 35
         versionCode = 1
