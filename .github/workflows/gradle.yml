@@ -209,26 +209,5 @@ jobs:
       - name: Submit dependency graph
         uses: gradle/actions/dependency-submission@v4
 
-  upload-play-store:
-    needs: publish-artifacts    
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Download APK artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: debug-apk
-        path: app/build/outputs/apk/debug
-
-    - name: Upload to Google Play
-      uses: r0adkll/upload-google-play@v1
-      with:
-        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-        packageName: com.raser.todolist
-        releaseFiles: app/release/app-release.aab
-        track: internal
-        status: completed
-        releaseName: ${{ github.run_number }}
+ 
 

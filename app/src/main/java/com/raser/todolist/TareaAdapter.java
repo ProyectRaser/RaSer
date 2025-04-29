@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.todolist.R;
+
 import java.util.List;
 
 public class TareaAdapter extends ArrayAdapter<Tarea> {
