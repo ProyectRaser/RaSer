@@ -209,11 +209,11 @@ public class MainActivity extends AppCompatActivity {
         inputNombre.setText(tarea.nombre);
         layout.addView(inputNombre);
 
-        Spinner spinnerEstado = crearSpinner(new String[]{"To Do", "In Progress", "Testing", "Deployed", "Done"}, tarea.estado, layout);
-        Spinner spinnerPrioridad = crearSpinner(new String[]{"Alta", "Media", "Baja"}, tarea.prioridad, layout);
-        Spinner spinnerLenguaje = crearSpinner(new String[]{"Java", "Python", "YAML", "Terraform", "Otro"}, tarea.lenguaje, layout);
-        Spinner spinnerTipo = crearSpinner(new String[]{"CI/CD", "Infraestructura", "Monitorización", "Bug", "Feature"}, tarea.tipo, layout);
-        Spinner spinnerEntorno = crearSpinner(new String[]{"Dev", "Staging", "Prod", "Minikube"}, tarea.entorno, layout);
+        Spinner spinnerEstado = crearSpinner(new String[]{"Estado","To Do", "In Progress", "Testing", "Deployed", "Done"}, tarea.estado, layout);
+        Spinner spinnerPrioridad = crearSpinner(new String[]{"Prioridad","Alta", "Media", "Baja"}, tarea.prioridad, layout);
+        Spinner spinnerLenguaje = crearSpinner(new String[]{"Lenguaje","Java", "Python", "YAML", "Terraform", "Otro"}, tarea.lenguaje, layout);
+        Spinner spinnerTipo = crearSpinner(new String[]{"Tipo","CI/CD", "Infraestructura", "Monitorización", "Bug", "Feature"}, tarea.tipo, layout);
+        Spinner spinnerEntorno = crearSpinner(new String[]{"Entorno","Dev", "Staging", "Prod", "Minikube"}, tarea.entorno, layout);
 
         new AlertDialog.Builder(this)
                 .setTitle("Editar Tarea")
