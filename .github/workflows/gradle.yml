@@ -226,9 +226,8 @@ jobs:
       - name: Authenticate with Firebase
         run: |
             echo ${{ secrets.FIREBASE_CREDENTIALS_JSON }} > firebase-credentials.json
-            firebase login:ci --token ${{ secrets.FIREBASE_TOKEN }} 
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS_JSON }}
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-credentials.json
         
       - name: Download APK from previous job
         uses: actions/download-artifact@v4
