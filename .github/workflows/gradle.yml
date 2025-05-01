@@ -22,12 +22,20 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
 
-      - name: Upload test results if failed
-        if: failure()
+      - name: Move test results
+        run: 
+          if [ -d "app/build/test-results/testDebugUnitTest" ]; then
+          mv app/build/test-results/testDebugUnitTest/ $GITHUB_WORKSPACE/reports/
+          else
+          echo "Test results directory does not exist"
+          exit 1
+            fi
+
+      - name: Upload test results as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-failures
-          path: app/build/test-results/
+          name: test-results
+          path: reports/ 
 
   lint:
     needs: setup
