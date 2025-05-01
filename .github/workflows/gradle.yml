@@ -242,7 +242,7 @@ jobs:
     # Subir el APK a Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         run: |
-          firebase appdistribution:distribute ./apk/app-debug.apk --app YOUR_FIREBASE_APP_ID --testers "proyectraser@gmail.com" --token ${{ secrets.FIREBASE_TOKEN }}
+         firebase appdistribution:distribute ./apk/app-debug.apk --app 1:482922853874:android:dfaed24364bf771311276b --testers "proyectraser@gmail.com" --token ${{ secrets.FIREBASE_TOKEN }}
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
