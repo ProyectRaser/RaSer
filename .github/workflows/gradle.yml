@@ -211,43 +211,34 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/android-apk-builder:${{ github.run_number }}
 
+
   firebase-upload:
     needs: publish-artifacts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-    
+
     # Configurar Firebase CLI
       - name: Set up Firebase CLI
         run: |
           curl -sL https://firebase.tools | bash
         shell: bash
-    
-    # Verificar si el archivo de credenciales se ha creado correctamente
-      - name: Check if firebase-credentials.json exists
-        run: |
-          echo "Verificando si el archivo de credenciales se generó correctamente..."
-          ls -alh firebase-credentials.json  # Verifica si el archivo se crea correctamente
-    
-    # Autenticación con Firebase
+
+    # Autenticación con Firebase usando el archivo de credenciales
       - name: Authenticate with Firebase
         run: |
           echo "${{ secrets.FIREBASE_CREDENTIALS_JSON }}" > firebase-credentials.json
         env:
           GOOGLE_APPLICATION_CREDENTIALS: firebase-credentials.json
-    
-    # Listar archivos en el directorio donde se espera el APK
-      - name: List files in the APK directory
-        run: ls -R ./apk
-    
+
     # Descargar el APK desde el artefacto
       - name: Download APK from previous job
         uses: actions/download-artifact@v4
         with:
           name: debug-apk
           path: ./apk
-    
+
     # Subir el APK a Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         run: |
