@@ -217,29 +217,43 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+    
+    # Configurar Firebase CLI
       - name: Set up Firebase CLI
         run: |
           curl -sL https://firebase.tools | bash
         shell: bash
-        
+    
+    # Verificar si el archivo de credenciales se ha creado correctamente
+      - name: Check if firebase-credentials.json exists
+        run: |
+          echo "Verificando si el archivo de credenciales se generó correctamente..."
+          ls -alh firebase-credentials.json  # Verifica si el archivo se crea correctamente
+    
+    # Autenticación con Firebase
       - name: Authenticate with Firebase
         run: |
-            echo ${{ secrets.FIREBASE_CREDENTIALS_JSON }} > firebase-credentials.json
+          echo "${{ secrets.FIREBASE_CREDENTIALS_JSON }}" > firebase-credentials.json
         env:
           GOOGLE_APPLICATION_CREDENTIALS: firebase-credentials.json
-        
+    
+    # Listar archivos en el directorio donde se espera el APK
+      - name: List files in the APK directory
+        run: ls -R ./apk
+    
+    # Descargar el APK desde el artefacto
       - name: Download APK from previous job
         uses: actions/download-artifact@v4
         with:
           name: debug-apk
           path: ./apk
-        
+    
+    # Subir el APK a Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         run: |
-          firebase appdistribution:distribute ./apk/app-debug.apk --app YOUR_FIREBASE_APP_ID --testers "proyectraser@gmail.com"  --token ${{ secrets.FIREBASE_TOKEN }}
+          firebase appdistribution:distribute ./apk/app-debug.apk --app YOUR_FIREBASE_APP_ID --testers "proyectraser@gmail.com" --token ${{ secrets.FIREBASE_TOKEN }}
         env:
-         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}     
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
   dependency-submission:
     needs: docker-release
