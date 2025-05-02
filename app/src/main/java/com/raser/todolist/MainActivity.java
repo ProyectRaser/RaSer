@@ -161,13 +161,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void mostrarDialogoNuevaTarea() {
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(50, 40, 50, 10);
+
+        Spinner spinnerEstado = crearSpinner(new String[]{"Estado", "To Do", "In Progress", "Testing", "Deployed", "Done"}, "Estado", layout);
+        Spinner spinnerPrioridad = crearSpinner(new String[]{"Prioridad", "Alta", "Media", "Baja"}, "Prioridad", layout);
+        Spinner spinnerLenguaje = crearSpinner(new String[]{"Lenguaje", "Java", "Python", "YAML", "Terraform", "Otro"}, "Lenguaje", layout);
+        Spinner spinnerTipo = crearSpinner(new String[]{"Tipo", "CI/CD", "Infraestructura", "Monitorización", "Bug", "Feature"}, "Tipo", layout);
+        Spinner spinnerEntorno = crearSpinner(new String[]{"Entorno", "Dev", "Staging", "Prod", "Minikube"}, "Entorno", layout);
+
         final EditText tarea = new EditText(this);
+        tarea.setHint("Nombre de la tarea");
+        layout.addView(tarea);
+
+
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Nueva Tarea")
-                .setMessage("Introduce tu nueva tarea")
-                .setView(tarea)
+                .setMessage("Introduce los detalles de la nueva tarea")
+                .setView(layout)
                 .setPositiveButton("Añadir", (dialogInterface, i) -> {
-                    String nuevaTarea = tarea.getText().toString();
+                    String nuevaTarea = tarea.getText().toString().trim();
 
                     if (nuevaTarea.isEmpty()) {
                         Toast.makeText(MainActivity.this, "El nombre no puede estar vacío", Toast.LENGTH_SHORT).show();
@@ -176,11 +190,11 @@ public class MainActivity extends AppCompatActivity {
 
                     Map<String, Object> data = new HashMap<>();
                     data.put("nombreTarea", nuevaTarea);
-                    data.put("estado", "To Do");
-                    data.put("prioridad", "Media");
-                    data.put("lenguaje", "Otro");
-                    data.put("tipo", "Feature");
-                    data.put("entorno", "Dev");
+                    data.put("estado", spinnerEstado.getSelectedItem().toString());
+                    data.put("prioridad", spinnerPrioridad.getSelectedItem().toString());
+                    data.put("lenguaje", spinnerLenguaje.getSelectedItem().toString());
+                    data.put("tipo", spinnerTipo.getSelectedItem().toString());
+                    data.put("entorno", spinnerEntorno.getSelectedItem().toString());
                     data.put("usuario", idUser);
 
                     db.collection("Tareas")
@@ -205,15 +219,16 @@ public class MainActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(50, 40, 50, 10);
 
+        Spinner spinnerEstado = crearSpinner(new String[]{"Estado", "To Do", "In Progress", "Testing", "Deployed", "Done"}, "Estado", layout);
+        Spinner spinnerPrioridad = crearSpinner(new String[]{"Prioridad", "Alta", "Media", "Baja"}, "Prioridad", layout);
+        Spinner spinnerLenguaje = crearSpinner(new String[]{"Lenguaje", "Java", "Python", "YAML", "Terraform", "Otro"}, "Lenguaje", layout);
+        Spinner spinnerTipo = crearSpinner(new String[]{"Tipo", "CI/CD", "Infraestructura", "Monitorización", "Bug", "Feature"}, "Tipo", layout);
+        Spinner spinnerEntorno = crearSpinner(new String[]{"Entorno", "Dev", "Staging", "Prod", "Minikube"}, "Entorno", layout);
+
         final EditText inputNombre = new EditText(this);
         inputNombre.setText(tarea.nombre);
         layout.addView(inputNombre);
 
-        Spinner spinnerEstado = crearSpinner(new String[]{"Estado","To Do", "In Progress", "Testing", "Deployed", "Done"}, tarea.estado, layout);
-        Spinner spinnerPrioridad = crearSpinner(new String[]{"Prioridad","Alta", "Media", "Baja"}, tarea.prioridad, layout);
-        Spinner spinnerLenguaje = crearSpinner(new String[]{"Lenguaje","Java", "Python", "YAML", "Terraform", "Otro"}, tarea.lenguaje, layout);
-        Spinner spinnerTipo = crearSpinner(new String[]{"Tipo","CI/CD", "Infraestructura", "Monitorización", "Bug", "Feature"}, tarea.tipo, layout);
-        Spinner spinnerEntorno = crearSpinner(new String[]{"Entorno","Dev", "Staging", "Prod", "Minikube"}, tarea.entorno, layout);
 
         new AlertDialog.Builder(this)
                 .setTitle("Editar Tarea")
@@ -241,11 +256,11 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private Spinner crearSpinner(String[] opciones, String seleccion, LinearLayout layout) {
+    private Spinner crearSpinner(String[] opcionesConTitulo, String seleccion, LinearLayout layout) {
         Spinner spinner = new Spinner(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, opciones);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, opcionesConTitulo);
         spinner.setAdapter(adapter);
-        int index = java.util.Arrays.asList(opciones).indexOf(seleccion);
+        int index = java.util.Arrays.asList(opcionesConTitulo).indexOf(seleccion);
         if (index >= 0) spinner.setSelection(index);
         layout.addView(spinner);
         return spinner;
