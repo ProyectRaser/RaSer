@@ -3,6 +3,12 @@ from prometheus_client import Counter, generate_latest
 from fastapi.responses import PlainTextResponse
 import firebase_admin
 from firebase_admin import credentials, firestore
+import uvicorn
+
+
+#Inicializar Uvicorn
+if __name__ == "__main__":
+     uvicorn.run(app, host="0.0.0.0", port=8080)
 
 # Inicializar FastAPI
 app = FastAPI()
