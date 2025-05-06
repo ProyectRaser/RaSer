@@ -18,14 +18,14 @@
         tools:targetApi="31">
 
         <activity
-            android:name="com.raser.todolist.Login"
+            android:name="com.example.todolist.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.raser.todolist.CompletarPerfilActivity" />
-        <activity android:name="com.raser.todolist.MainActivity" />
+        <activity android:name="com.example.todolist.CompletarPerfilActivity" />
+        <activity android:name="com.example.todolist.MainActivity" />
     </application>
 </manifest>

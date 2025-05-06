@@ -1,4 +1,4 @@
-package com.raser.todolist;
+package com.example.todolist;
 
 public class Tarea {
 
