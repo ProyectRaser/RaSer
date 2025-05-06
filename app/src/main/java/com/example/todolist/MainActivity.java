@@ -1,4 +1,4 @@
-package com.raser.todolist;
+package com.example.todolist;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,7 +21,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.todolist.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;

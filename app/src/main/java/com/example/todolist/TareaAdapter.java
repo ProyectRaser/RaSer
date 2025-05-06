@@ -1,4 +1,4 @@
-package com.raser.todolist;
+package com.example.todolist;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-
-import com.example.todolist.R;
 
 import java.util.List;
 
