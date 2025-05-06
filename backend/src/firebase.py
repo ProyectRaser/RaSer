@@ -35,23 +35,23 @@ def actualizar_total_usuarios():
     try:
         usuarios_ref = db.collection("Usuarios")
         docs = list(usuarios_ref.stream())
-        print(f"🔥 Documentos obtenidos (Usuarios): {docs}")
+        print(f" Documentos obtenidos (Usuarios): {docs}")
         total = len(docs)
-        print(f"✅ Total usuarios: {total}")
+        print(f" Total usuarios: {total}")
         total_usuarios_gauge.set(total)
     except Exception as e:
-        print(f"❌ Error al contar usuarios: {e}")
+        print(f" Error al contar usuarios: {e}")
 
 def actualizar_total_tareas():
     try:
         tareas_ref = db.collection("Tareas")
         docs = list(tareas_ref.stream())
-        print(f"🔥 Documentos obtenidos (Tareas): {docs}")
+        print(f" Documentos obtenidos (Tareas): {docs}")
         total = len(docs)
-        print(f"✅ Total tareas: {total}")
+        print(f" Total tareas: {total}")
         total_tareas_gauge.set(total)
     except Exception as e:
-        print(f"❌ Error al contar tareas: {e}")
+        print(f" Error al contar tareas: {e}")
 
 # Middleware para contar peticiones
 @app.middleware("http")
