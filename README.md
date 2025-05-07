@@ -67,35 +67,45 @@ Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permit
 
 ---
 
-### Automatización del despliegue del backend en GKE con terraform.
+# Automatización del Despliegue del Backend en GKE con Terraform
 
-**Descripción**
+## Descripción
 
-En esta etapa del proyecto se llevó a cabo el despliegue automatizado de la infraestructura necesaria para ejecutar el backend, utilizando Terraform como herramienta de Infraestructura como Código (IaC). Se definió de forma declarativa un entorno completo en Google Cloud Platform (GCP), que incluye la creación de un clúster de Google Kubernetes Engine (GKE), la configuración de un Node Pool personalizado, y la provisión de todos los recursos Kubernetes necesarios, como secretos, volúmenes persistentes y manifiestos de despliegue de la aplicación.
+En esta etapa del proyecto, se implementó un despliegue automatizado de la infraestructura esencial para la ejecución del backend, utilizando Terraform como herramienta de Infraestructura como Código (IaC). Se definió de manera declarativa un entorno completo en Google Cloud Platform (GCP), abarcando la creación de un clúster de Google Kubernetes Engine (GKE), la configuración de un Node Pool personalizado y la provisión de todos los recursos de Kubernetes necesarios, como secretos, volúmenes persistentes y manifiestos de despliegue de la aplicación.
 
-Además, se integró un sistema de observabilidad completo, que incluye la instalación automatizada del stack kube-prometheus-stack mediante Helm, permitiendo exponer métricas personalizadas del backend a Prometheus, visualizarlas en Grafana, y configurar reglas de alerta personalizadas. Estas alertas son gestionadas por Alertmanager y están integradas con Slack, permitiendo el envío de notificaciones automáticas ante eventos críticos directamente al canal del equipo.
+Adicionalmente, se integró un sistema de observabilidad integral mediante la instalación automatizada del stack `kube-prometheus-stack` utilizando Helm. Esto permitió exponer métricas personalizadas del backend a Prometheus, visualizarlas en Grafana y configurar reglas de alerta personalizadas. Estas alertas son gestionadas por Alertmanager y se integran con Slack, facilitando el envío de notificaciones automáticas ante eventos críticos directamente al canal del equipo.
 
+## Objetivos
 
-**Objetivos**
+* **Automatizar el despliegue de infraestructura** en Google Cloud Platform (GCP) mediante Terraform, siguiendo el enfoque de Infraestructura como Código (IaC).
+* **Provisar un clúster de Kubernetes** en GKE con su correspondiente node pool configurado de forma declarativa.
+* **Desplegar recursos Kubernetes** necesarios para ejecutar el backend (Deployment, Service, PVC, Secrets) sin intervención manual.
+* **Integrar el stack de monitorización** utilizando Helm para instalar `kube-prometheus-stack` (Prometheus, Grafana, Alertmanager).
+* **Exponer métricas personalizadas** del backend y capturarlas mediante `ServiceMonitor` para visualización en Grafana.
+* **Definir reglas de alerta** con `PrometheusRule` y configurar Alertmanager para el envío de notificaciones automáticas a Slack.
+* **Asegurar la trazabilidad y replicabilidad** del entorno completo mediante código versionado, reutilizable y fácilmente desplegable en distintos entornos.
 
+## Arquitectura General
 
-- Automatizar el despliegue de infraestructura en Google Cloud Platform (GCP) mediante Terraform, siguiendo el enfoque de Infraestructura como Código (IaC).
+La arquitectura del proyecto se divide en tres capas principales:
 
-- Provisar un clúster de Kubernetes en GKE con su correspondiente node pool configurado de forma declarativa.
+* **Capa de Aplicación (FastAPI):**
+    * API REST con endpoints para usuarios y tareas.
+    * Persistencia con Firebase.
+    * Exposición del endpoint `/metrics` para Prometheus.
 
-- Desplegar recursos Kubernetes necesarios para ejecutar el backend (Deployment, Service, PVC, Secrets) sin intervención manual.
+* **Capa de Infraestructura (Terraform + Kubernetes):**
+    * Clúster GKE con NodePools configurables.
+    * Manifiestos Kubernetes para despliegue, servicios y volúmenes persistentes.
+    * Gestión de secretos para Firebase y Alertmanager.
 
-- Integrar el stack de monitorización utilizando Helm para instalar kube-prometheus-stack (Prometheus, Grafana, Alertmanager).
+* **Capa de Observabilidad:**
+    * Instalación del stack `kube-prometheus-stack` con Helm.
+    * Definición de `ServiceMonitor` y `PrometheusRule` personalizados.
+    * Dashboard en Grafana y alertas enviadas a Slack.
 
-- Exponer métricas personalizadas del backend y capturarlas mediante ServiceMonitor para visualización en Grafana.
+### Diagrama Lógico:
 
-- Definir reglas de alerta con PrometheusRule y configurar Alertmanager para el envío de notificaciones automáticas a Slack.
-
-- Asegurar la trazabilidad y replicabilidad del entorno completo mediante código versionado, reutilizable y fácilmente desplegable en distintos entornos.
-
-
-
-**Arquitectura general**
 
 
 La arquitectura del proyecto se divide en tres capas principales:
