@@ -445,5 +445,20 @@ kubectl get svc -n monitoring
 •	Simular errores (alto uso de CPU, caída del pod)
 •	Verificar llegada de alertas en Slack
 
+## Control de Versiones de la App
+
+El control de versiones de la aplicación se gestionará utilizando las versiones generadas automáticamente por **Android Studio**. Estas versiones se subirán a **Google Play Console** una vez que hayan sido probadas y verificadas.
+
+### Proceso
+
+1. **Generación de versiones**: Android Studio generará automáticamente las versiones del APK y AAB durante el proceso de compilación. Estas versiones se basarán en los cambios realizados en el código y los ajustes de versión configurados en el archivo `build.gradle`.
+
+2. **Pruebas**: Las versiones generadas serán sometidas a pruebas unitarias, análisis de calidad y seguridad (como Snyk y SonarCloud), asegurando que el código esté libre de errores y vulnerabilidades.
+
+3. **Subida a Play Console**: Una vez que las versiones han sido aprobadas después de las pruebas, se subirán automáticamente a **Google Play Console** para su distribución a los usuarios finales.
+
+Este flujo de trabajo asegura que las versiones de la aplicación estén bien controladas, sean seguras y estén listas para ser distribuidas a través de **Google Play**.
+
+
 
 
