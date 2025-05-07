@@ -65,8 +65,32 @@ Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permit
 - Almacenamiento seguro con Firebase Firestore.
 - Subida de imagen de perfil y gestión de cuenta.
 [Video de Rase](images/rasedevideo.mp4)
+
 ---
+
+## Flujo de Trabajo Gitflow
+![Gitflow](images/gitflow.png)
+
+## Flujo de Trabajo Gitflow (Simplificado)
+
+Este diagrama describe un flujo de trabajo de Gitflow simplificado que utilizamos para integrar los cambios en nuestra rama principal (`main`) y realizar el despliegue. 
+
+1.  **Sergi y Ramon:** Desarrolladores (representados por los nodos "Sergi" y "Ramon") realizan cambios en sus ramas locales (no mostradas explícitamente).
+2.  **Merge a master:** Una vez que los cambios están listos, se realiza un merge de las ramas de Sergi y Ramon a la rama principal (`main`). Esto significa integrar sus contribuciones en la línea de desarrollo principal.
+3.  **Push a master:** Después de que los cambios se han integrado localmente en `main`, se realiza un `push` para subir estos cambios al repositorio remoto. Esto asegura que todos los miembros del equipo tengan acceso a la última versión de la rama principal.
+4.  **Revisión de código:** Antes de que los cambios en `main` sean desplegados, se realiza una revisión de código. Esta es una práctica importante para asegurar la calidad y evitar errores en el código base.
+5.  **Deploy:** Finalmente, una vez que el código en `main` ha sido revisado y aprobado, se realiza el despliegue a producción o al entorno de pruebas.
+
+En resumen, el flujo se centra en la colaboración a través de merges a la rama principal (`main`), una etapa de revisión para garantizar la calidad, y finalmente el despliegue de la versión integrada.
+
+**Nota importante:** Debido a problemas técnicos, nuestra rama principal ha sido renombrada de `main` a `master`. Todas las referencias a la rama principal en este documento deben entenderse como `master`.
+---
+# Estructura 
+![Estructura](images/estructura.png)
+
 # Despliegue CI/CD con GitHub Actions
+
+![cicd](images/cicd.jpg)
 
 Este flujo de trabajo automatiza el proceso de integración continua (CI) y despliegue continuo (CD) para un proyecto Android utilizando **Gradle**, **SonarCloud**, **Snyk**, **Firebase**, y **Docker**.
 
@@ -89,6 +113,7 @@ Ejecuta las pruebas unitarias con Gradle, mueve los resultados a un directorio e
 
 ### 3. **lint**
 Ejecuta el análisis de estilo de código con **Android Lint** y sube los informes de los problemas encontrados como artefactos.
+![Lint](images/lint.png)
 
 ### 4. **build**
 Construye el proyecto, generando tanto el **APK** como el **AAB** y sube ambos artefactos. También ejecuta las pruebas unitarias.
@@ -98,9 +123,11 @@ Genera el reporte de cobertura de código usando **JaCoCo** y lo sube si el repo
 
 ### 6. **sonarcloud-analysis**
 Realiza un análisis de calidad de código con **SonarCloud**, utilizando las métricas de cobertura generadas por **JaCoCo**.
+![Sonocloud](images/sonocloud.png)
 
 ### 7. **security-analysis**
 Ejecuta un análisis de vulnerabilidades con **Snyk**, escaneando todos los proyectos. También autentica y realiza el monitoreo de vulnerabilidades en el proyecto.
+![Slik](images/slik.png)
 
 ### 8. **publish-artifacts**
 Sube el **APK** y el **AAB** generados a GitHub como artefactos para su distribución posterior.
@@ -444,6 +471,7 @@ kubectl get svc -n monitoring
 •	Confirmar que se reciben métricas en Grafana
 •	Simular errores (alto uso de CPU, caída del pod)
 •	Verificar llegada de alertas en Slack
+![Grafana](images/grafana.png)
 
 ## Control de Versiones de la App
 
@@ -455,7 +483,9 @@ El control de versiones de la aplicación se gestionará utilizando las versione
 
 2. **Pruebas**: Las versiones generadas serán sometidas a pruebas unitarias, análisis de calidad y seguridad (como Snyk y SonarCloud), asegurando que el código esté libre de errores y vulnerabilidades.
 
-3. **Subida a Play Console**: Una vez que las versiones han sido aprobadas después de las pruebas, se subirán automáticamente a **Google Play Console** para su distribución a los usuarios finales.
+3. **Subida a Play Console**: Una vez que las versiones han sido aprobadas después de las pruebas, se subirán automáticamente a **Google Play Console** para su distribución a los usuarios finales. ![Versiones](images/versiones.png)
+   
+   
 
 Este flujo de trabajo asegura que las versiones de la aplicación estén bien controladas, sean seguras y estén listas para ser distribuidas a través de **Google Play**.
 
