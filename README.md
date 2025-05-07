@@ -71,7 +71,7 @@ Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permit
 
 **Descripción**
 
-En esta etapa del proyecto se implementó un proceso de despliegue y monitorización completamente automatizado para una aplicación backend en producción. Utilizando Terraform como herramienta de Infraestructura como Código (IaC), se aprovisionó de forma declarativa un entorno completo en Google Cloud Platform (GCP), incluyendo la creación de un clúster de Google Kubernetes Engine (GKE), su configuración con un Node Pool personalizado, y la gestión de secretos y recursos Kubernetes necesarios para ejecutar la aplicación.
+En esta etapa del proyecto se implementó un proceso de despliegue y monitorización completamente automatizado para una aplicación backend. Utilizando Terraform como herramienta de Infraestructura como Código (IaC), se aprovisionó de forma declarativa un entorno completo en Google Cloud Platform (GCP), incluyendo la creación de un clúster de Google Kubernetes Engine (GKE), su configuración con un Node Pool personalizado, y la gestión de secretos y recursos Kubernetes necesarios para ejecutar la aplicación.
 
 Como parte fundamental del despliegue, se integró un sistema de observabilidad completo, instalando automáticamente el stack de monitorización kube-prometheus-stack mediante Helm. Esto permitió la exposición de métricas a través de Prometheus, la visualización en tiempo real mediante Grafana, y la configuración de alertas automáticas con Alertmanager, integradas con Slack para la notificación de eventos críticos.
 
