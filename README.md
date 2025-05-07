@@ -372,7 +372,7 @@ helm install kube-prometheus prometheus-community/kube-prometheus-stack
 ---
 
 
-##Pasos de Ejecución.
+## Pasos de Ejecución.
 
 **Inicializar Terraform**
  
