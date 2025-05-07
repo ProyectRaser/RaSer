@@ -64,7 +64,7 @@ Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permit
 - Filtros combinables para encontrar tareas fácilmente.
 - Almacenamiento seguro con Firebase Firestore.
 - Subida de imagen de perfil y gestión de cuenta.
-
+[Video de Rase](images/rasedevideo.mp4)
 ---
 # Despliegue CI/CD con GitHub Actions
 
