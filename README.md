@@ -75,7 +75,9 @@ En esta etapa del proyecto se llevó a cabo el despliegue automatizado de la inf
 
 Además, se integró un sistema de observabilidad completo, que incluye la instalación automatizada del stack kube-prometheus-stack mediante Helm, permitiendo exponer métricas personalizadas del backend a Prometheus, visualizarlas en Grafana, y configurar reglas de alerta personalizadas. Estas alertas son gestionadas por Alertmanager y están integradas con Slack, permitiendo el envío de notificaciones automáticas ante eventos críticos directamente al canal del equipo.
 
+
 **Objetivos**
+
 
 - Automatizar el despliegue de infraestructura en Google Cloud Platform (GCP) mediante Terraform, siguiendo el enfoque de Infraestructura como Código (IaC).
 
@@ -92,7 +94,9 @@ Además, se integró un sistema de observabilidad completo, que incluye la insta
 - Asegurar la trazabilidad y replicabilidad del entorno completo mediante código versionado, reutilizable y fácilmente desplegable en distintos entornos.
 
 
+
 **Arquitectura general**
+
 
 La arquitectura del proyecto se divide en tres capas principales:
 
