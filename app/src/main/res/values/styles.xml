@@ -27,7 +27,7 @@
     <!-- Tipografía para texto normal -->
     <style name="Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/adamina</item>
-        <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:textColor">@color/charcoal_brown</item>
     </style>
 
     <!-- Botón personalizado -->
