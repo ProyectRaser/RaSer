@@ -71,11 +71,9 @@ Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permit
 
 **Descripción**
 
-En esta etapa del proyecto se implementó un proceso de despliegue y monitorización completamente automatizado para una aplicación backend. Utilizando Terraform como herramienta de Infraestructura como Código (IaC), se aprovisionó de forma declarativa un entorno completo en Google Cloud Platform (GCP), incluyendo la creación de un clúster de Google Kubernetes Engine (GKE), su configuración con un Node Pool personalizado, y la gestión de secretos y recursos Kubernetes necesarios para ejecutar la aplicación.
+En esta etapa del proyecto se llevó a cabo el despliegue automatizado de la infraestructura necesaria para ejecutar el backend, utilizando Terraform como herramienta de Infraestructura como Código (IaC). Se definió de forma declarativa un entorno completo en Google Cloud Platform (GCP), que incluye la creación de un clúster de Google Kubernetes Engine (GKE), la configuración de un Node Pool personalizado, y la provisión de todos los recursos Kubernetes necesarios, como secretos, volúmenes persistentes y manifiestos de despliegue de la aplicación.
 
-Como parte fundamental del despliegue, se integró un sistema de observabilidad completo, instalando automáticamente el stack de monitorización kube-prometheus-stack mediante Helm. Esto permitió la exposición de métricas a través de Prometheus, la visualización en tiempo real mediante Grafana, y la configuración de alertas automáticas con Alertmanager, integradas con Slack para la notificación de eventos críticos.
-
-Este enfoque garantiza que todo el ciclo de vida de la infraestructura y la monitorización del backend pueda ser reproducido, versionado y desplegado de forma consistente en diferentes entornos, minimizando errores manuales y asegurando una operación confiable.
+Además, se integró un sistema de observabilidad completo, que incluye la instalación automatizada del stack kube-prometheus-stack mediante Helm, permitiendo exponer métricas personalizadas del backend a Prometheus, visualizarlas en Grafana, y configurar reglas de alerta personalizadas. Estas alertas son gestionadas por Alertmanager y están integradas con Slack, permitiendo el envío de notificaciones automáticas ante eventos críticos directamente al canal del equipo.
 
 **Objetivos**
 
