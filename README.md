@@ -66,6 +66,64 @@ Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permit
 - Subida de imagen de perfil y gestión de cuenta.
 
 ---
+# Despliegue CI/CD con GitHub Actions
+
+Este flujo de trabajo automatiza el proceso de integración continua (CI) y despliegue continuo (CD) para un proyecto Android utilizando **Gradle**, **SonarCloud**, **Snyk**, **Firebase**, y **Docker**.
+
+## Objetivos
+
+- **Pruebas unitarias**: Ejecuta pruebas automáticas y sube los resultados como artefactos.
+- **Linting**: Analiza el código para detectar problemas de estilo y calidad.
+- **Construcción**: Construye el APK y AAB, y los sube como artefactos.
+- **Análisis de seguridad**: Ejecuta un análisis de vulnerabilidades con **Snyk**.
+- **Docker**: Construye y sube una imagen Docker optimizada con el APK.
+- **Firebase**: Subir el APK a Firebase para distribución.
+
+## Jobs
+
+### 1. **setup**
+Configura el entorno de desarrollo, especificando la versión de **Java 17** y reutiliza un workflow común para el setup.
+
+### 2. **test**
+Ejecuta las pruebas unitarias con Gradle, mueve los resultados a un directorio específico y los sube como artefactos.
+
+### 3. **lint**
+Ejecuta el análisis de estilo de código con **Android Lint** y sube los informes de los problemas encontrados como artefactos.
+
+### 4. **build**
+Construye el proyecto, generando tanto el **APK** como el **AAB** y sube ambos artefactos. También ejecuta las pruebas unitarias.
+
+### 5. **coverage**
+Genera el reporte de cobertura de código usando **JaCoCo** y lo sube si el reporte se genera correctamente.
+
+### 6. **sonarcloud-analysis**
+Realiza un análisis de calidad de código con **SonarCloud**, utilizando las métricas de cobertura generadas por **JaCoCo**.
+
+### 7. **security-analysis**
+Ejecuta un análisis de vulnerabilidades con **Snyk**, escaneando todos los proyectos. También autentica y realiza el monitoreo de vulnerabilidades en el proyecto.
+
+### 8. **publish-artifacts**
+Sube el **APK** y el **AAB** generados a GitHub como artefactos para su distribución posterior.
+
+### 9. **docker-release**
+Crea una imagen **Docker** optimizada con el **APK** y la sube a **Docker Hub** para su distribución.
+
+### 10. **firebase-upload**
+Autentica con Firebase y sube el **APK** generado a **Firebase App Distribution**, permitiendo su distribución a testers.
+
+### 11. **dependency-submission**
+Envía el gráfico de dependencias a **SonarCloud** para obtener análisis de dependencias y problemas potenciales.
+
+## Flujo de Trabajo
+
+- **Inicio**: Cuando se hace un `push` o `pull_request` en la rama `master`, se inicia el flujo de trabajo.
+- **Secuencia de Jobs**: Los jobs se ejecutan de manera secuencial y están condicionados por la finalización exitosa de los anteriores.
+- **Artefactos**: Los resultados de pruebas, informes de lint, y artefactos de construcción se almacenan como artefactos, disponibles para su descarga o distribución.
+- **Análisis de calidad y seguridad**: Se realiza análisis estático con **SonarCloud** y un análisis de vulnerabilidades con **Snyk** para garantizar la seguridad del código.
+- **Distribución**: El APK generado se distribuye a Firebase y Docker Hub.
+
+
+
 
 # Automatización del Despliegue del Backend en GKE con Terraform
 
