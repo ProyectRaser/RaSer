@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp"
-    android:background="#D5CBC0">
+    android:background="@color/taupe_grey">
 
     <!-- Nombre de la tarea -->
     <TextView

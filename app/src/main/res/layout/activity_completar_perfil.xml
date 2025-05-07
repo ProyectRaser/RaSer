@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     style="@style/ThemeOverlay.ToDoList.FullscreenContainer"
     android:padding="24dp"
-    android:background="@color/colorBackground">
-
+    android:background="@color/background">
     <!-- Imagen de perfil -->
     <ImageView
         android:id="@+id/imagenPerfil"
