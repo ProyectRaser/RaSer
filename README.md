@@ -1,10 +1,7 @@
-## RaSer
 
 #  Proyecto RaSer
-
-## 📑 Índice
-
-## 📑 Índice
+---
+##  Índice
 
 - [Funcionamiento](#funcionamiento)
 - [Campos de la tarea](#campos-de-la-tarea)
