@@ -1,3 +1,4 @@
+# Archivos de proyecto Android Studio / IntelliJ IDEA
 *.iml
 .gradle
 /local.properties
@@ -7,12 +8,42 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+
+# Archivos del sistema operativo macOS
 .DS_Store
+
+# Archivos de construcción de Android
 /build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+
+# Firebase
 firebase_key.json
+
+# Entorno virtual de Python
 backend/venv/
+
+# Archivos de configuración de Kubernetes
 k8s/github-secret.yaml
+
+# Ignorar archivos de estado de Terraform
+*.tfstate
+*.tfstate.*
+
+# Ignorar directorios y archivos de configuración local de Terraform
+.terraform/
+
+# Ignorar archivos de bloqueo de Terraform
+.terraform.lock.hcl
+
+# Ignorar archivos de configuración sensibles de Terraform
+terraform.tfvars
+*.auto.tfvars
+
+# Archivos temporales de editor
+*.bak
+*.swp
+
+# Archivos de versión de Terraform local
+.terraform-version
