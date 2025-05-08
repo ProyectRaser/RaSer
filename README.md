@@ -1,14 +1,36 @@
 ## RaSer
 
+#  Proyecto RaSer
+
+## 📑 Índice
+
+## 📑 Índice
+
+- [Funcionamiento](#funcionamiento)
+- [Campos de la tarea](#campos-de-la-tarea)
+- [Detalle de los campos de la tarea](#detalle-de-los-campos-de-la-tarea)
+- [Filtros inteligentes](#filtros-inteligentes)
+- [Características clave](#características-clave)
+- [Flujo de Trabajo Gitflow](#flujo-de-trabajo-gitflow)
+- [Estructura](#estructura)
+- [Automatización del Despliegue del Backend en GKE con Terraform](#automatización-del-despliegue-del-backend-en-gke-con-terraform)
+- [Desarrollo del backend](#desarrollo-del-backend)
+- [Pasos de Ejecución](#pasos-de-ejecución)
+- [Control de Versiones de la App](#control-de-versiones-de-la-app)
+
+---
+
+
+
 **RaSer** es una aplicación móvil enfocada en la **gestión de tareas para profesionales DevOps**, diseñada para facilitar el seguimiento, organización y filtrado de tareas técnicas de forma rápida e intuitiva.
 
-### 🧩 Funcionamiento
+##  Funcionamiento
 
 - **Registro sencillo**: Solo necesitas ingresar un correo electrónico y una contraseña para crear una cuenta.
 - **Completar perfil**: Al registrarte, serás redirigido a una pantalla para completar tu información personal.
 - **Gestión de tareas**: La interfaz principal permite añadir, editar y eliminar tareas fácilmente. Al crear una tarea, se despliega un formulario con campos personalizables.
 
-### 📋 Campos de la tarea
+###  Campos de la tarea
 
 Cada tarea cuenta con los siguientes campos:
 
@@ -20,7 +42,7 @@ Cada tarea cuenta con los siguientes campos:
 
 ---
 
-### 📌 Detalle de los campos de la tarea
+###  Detalle de los campos de la tarea
 
 - **Estado**  
   Indica el progreso actual de la tarea:
@@ -52,11 +74,11 @@ Cada tarea cuenta con los siguientes campos:
 
 ---
 
-### 🔎 Filtros inteligentes
+###  Filtros inteligentes
 
 Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permite un control más eficiente según el estado, la prioridad, el entorno de ejecución, etc.
 
-### 🎯 Características clave
+###  Características clave
 
 - Interfaz intuitiva y optimizada para móviles.
 - Autenticación con correo electrónico y Google.
@@ -67,16 +89,15 @@ Puedes **filtrar tareas por cualquiera de los campos anteriores**, lo que permit
 [Video de Rase](images/rasedevideo.mp4)
 
 ---
-
-## Flujo de Trabajo Gitflow
+##  Flujo de Trabajo Gitflow
 ![Gitflow](images/gitflow.png)
 
-## Flujo de Trabajo Gitflow (Simplificado)
+## Flujo de Trabajo Gitflow (Simplific)
 
 Este diagrama describe un flujo de trabajo de Gitflow simplificado que utilizamos para integrar los cambios en nuestra rama principal (`main`) y realizar el despliegue. 
 
 1.  **Sergi y Ramon:** Desarrolladores (representados por los nodos "Sergi" y "Ramon") realizan cambios en sus ramas locales (no mostradas explícitamente).
-2.  **Merge a master:** Una vez que los cambios están listos, se realiza un merge de las ramas de Sergi y Ramon a la rama principal (`main`). Esto significa integrar sus contribuciones en la línea de desarrollo principal.
+2.  **Merge a master:** Una vez que los cambios están listos, se realiza un merge de las ramas de Sergi y Ramon a la rama principal (`main`). Para integrar cada una de nuestras  contribuciones en la línea de desarrollo principal.
 3.  **Push a master:** Después de que los cambios se han integrado localmente en `main`, se realiza un `push` para subir estos cambios al repositorio remoto. Esto asegura que todos los miembros del equipo tengan acceso a la última versión de la rama principal.
 4.  **Revisión de código:** Antes de que los cambios en `main` sean desplegados, se realiza una revisión de código. Esta es una práctica importante para asegurar la calidad y evitar errores en el código base.
 5.  **Deploy:** Finalmente, una vez que el código en `main` ha sido revisado y aprobado, se realiza el despliegue a producción o al entorno de pruebas.
@@ -85,10 +106,10 @@ En resumen, el flujo se centra en la colaboración a través de merges a la rama
 
 **Nota importante:** Debido a problemas técnicos, nuestra rama principal ha sido renombrada de `main` a `master`. Todas las referencias a la rama principal en este documento deben entenderse como `master`.
 ---
-# Estructura 
+##  Estructura
 ![Estructura](images/estructura.png)
 
-# Despliegue CI/CD con GitHub Actions
+## ⚙️ Despliegue CI/CD con GitHub Actions
 
 ![cicd](images/cicd.jpg)
 
@@ -152,7 +173,7 @@ Envía el gráfico de dependencias a **SonarCloud** para obtener análisis de de
 
 
 
-# Automatización del Despliegue del Backend en GKE con Terraform
+##  Automatización del Despliegue del Backend en GKE con Terraform
 
 ## Descripción
 
@@ -224,7 +245,7 @@ Este diseño modular permite escalar la aplicación, mantener la observabilidad 
 
 
 
-## Tecnologías utilizadas.
+## Tecnologías utilizadas
 
 
 •	FastAPI
@@ -277,7 +298,7 @@ backend/
 ```
 ---
 
-## Desarrollo del backend.
+##  Desarrollo del backend
 
 El backend se desarrolló con FastAPI y utiliza Firestore para almacenar datos de usuarios y tareas. Además, expone un endpoint /metrics con métricas personalizadas, lo que permite su monitorización con Prometheus.
 
@@ -305,7 +326,7 @@ El backend se desarrolló con FastAPI y utiliza Firestore para almacenar datos d
 
 ---
 
-## Despliegue en kubernetes con terraform.
+##  Despliegue en kubernetes con terraform
 
 La infraestructura se automatiza completamente usando Terraform.
 El clúster de Kubernetes se crea en GKE, y los recursos adicionales se aplican con manifiestos YAML.
@@ -372,7 +393,7 @@ helm install kube-prometheus prometheus-community/kube-prometheus-stack
 ---
 
 
-## Pasos de Ejecución.
+##  Pasos de Ejecución
 
 **Inicializar Terraform**
  
@@ -411,7 +432,7 @@ terraform apply
 
 ---
 
-## Verificaciones y Pruebas
+##  Verificaciones y Pruebas
 
 **Infraestructura**
 
@@ -473,7 +494,7 @@ kubectl get svc -n monitoring
 •	Verificar llegada de alertas en Slack
 ![Grafana](images/grafana.png)
 
-## Control de Versiones de la App
+##  Control de Versiones de la App
 
 El control de versiones de la aplicación se gestionará utilizando las versiones generadas automáticamente por **Android Studio**. Estas versiones se subirán a **Google Play Console** una vez que hayan sido probadas y verificadas.
 
