@@ -1,0 +1,40 @@
+clean-repo/
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+firebase_key.json
+backend/venv/
+k8s/github-secret.yaml
+fastapi-gke/terraform/k8s/firebase_key.json
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+
+# GCP SDK y binarios grandes
+google-cloud-sdk/
+gke-gcloud-auth-plugin
+update_terraform.sh
+
+# Archivos temporales y de instalación
+tmp/
+*.log
+
+# Terraform providers (MUY importantes para evitar límites de 100 MB)
+**/terraform-provider-*
+
+# Python virtual envs
+backend/venv/

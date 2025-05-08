@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: test-alert
+  namespace: monitoring
+  labels:
+    prometheus: kube-prometheus
+spec:
+  groups:
+    - name: test.rules
+      rules:
+        - alert: AlwaysFiring
+          expr: vector(1)
+          for: 10s
+          labels:
+            severity: critical
+          annotations:
+            summary: "🚨 Alerta de prueba activa"
+            description: "Esto es una alerta generada manualmente para probar Slack"

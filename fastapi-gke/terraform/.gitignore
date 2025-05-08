@@ -1,0 +1,6 @@
+.terraform/
+google-cloud-sdk/
+tmp/
+terraform.tfstate
+terraform.tfstate.*
+*.backup
