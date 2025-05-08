@@ -172,6 +172,9 @@ Envía el gráfico de dependencias a **SonarCloud** para obtener análisis de de
 
 ##  Automatización del Despliegue del Backend en GKE con Terraform
 
+![Cluster](images/cluster.png)
+![Instancias](images/instancias.png)
+
 ## Descripción
 
 En esta etapa del proyecto, se implementó un despliegue automatizado de la infraestructura esencial para la ejecución del backend, utilizando Terraform como herramienta de Infraestructura como Código (IaC). Se definió de manera declarativa un entorno completo en Google Cloud Platform (GCP), abarcando la creación de un clúster de Google Kubernetes Engine (GKE), la configuración de un Node Pool personalizado y la provisión de todos los recursos de Kubernetes necesarios, como secretos, volúmenes persistentes y manifiestos de despliegue de la aplicación.
